@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$title}}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 <body>
@@ -26,13 +26,23 @@
         <li class="nav-item">
           <a class="nav-link {{ ($title === 'About Me')? 'active' : ''}}" href="/aboutme">About Me</a>
         </li>
+      </ul>
+      @auth
+      <ul class="navbar-nav ms-auto me-5">
         <li class="nav-item">
-          <a class="nav-link {{ ($title === 'Login')? 'active' : ''}}" href="/login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/">Register</a>
+          <form action="/logout" method = "POST">
+            @csrf
+            <a class="nav-link {{ ($title === 'Logout')? 'active' : ''}}"><button type = "submit" class = "btn btn-dark"><i class="bi bi-box-arrow-left"></i> Logout</button></a>
+          </form>
         </li>
       </ul>
+      @else      
+      <ul class="navbar-nav ms-auto me-5">
+        <li class="nav-item">
+          <a class="nav-link {{ ($title === 'Login')? 'active' : ''}}" href="{{ route('login') }}"><button class ="btn btn-dark"><i class="bi bi-box-arrow-in-right"></i> Login</button></a>
+        </li>
+      </ul>
+      @endauth
     </div>
   </div>
 </nav>  

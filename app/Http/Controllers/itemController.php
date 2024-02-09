@@ -3,27 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class itemController extends Controller
 {
     public function createItem(){
         return view('createItem',[
-            'title' => 'Create Item'
+            'title' => 'Create Item',
+            'categories' => Category::all()
         ]);
     }
     public function storeItem(Request $request){
         $request->validate([
-            'category' => 'required' ,
+            'category_id' => 'required',
             'name' => 'required|min:5|max:80|',
             'price' => 'required',
-            'quantity' => 'required'
+            'quantity' => 'required',
+            'image' => 'required|mimes:jpg,png'
         ]);
+
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $filename = $request->name . "." . $extension;
+        $request->file('image')->storeAs('/public/item_images', $filename);
+        
         Item::create([
-            'category' => $request->category,
+            'category_id' => $request->category_id,
             'name' => $request->name,
             'price' => $request->price,
-            'quantity' => $request->quantity
+            'quantity' => $request->quantity,
+            'image' => $filename
         ]);
         return redirect('/');
     }
@@ -57,14 +66,12 @@ class itemController extends Controller
 
     public function update (Item $item, Request $request){
         $request->validate([
-            'category' => 'required' ,
             'name' => 'required|min:5|max:80|',
             'price' => 'required',
             'quantity' => 'required'
         ]);
 
         $item->update([
-            'category' => $request->category,
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity

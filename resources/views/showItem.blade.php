@@ -3,7 +3,8 @@
 
 @section('container')
 <h1>Item Details</h1><br>
-<h3> Category: {{$item->category}} </h3>
+<img src=" {{ asset('storage/item_images/'.$item->image) }} " alt= "{{ $item->name }} " style="width: 400px">
+<h3> Category: {{$item->category->category}} </h3>
 <h4> Name: {{$item->name}} </h4>
 <h5> Price: {{$item->price}} </h5>
 <h5> Quantity: {{$item->quantity}} </h5>
