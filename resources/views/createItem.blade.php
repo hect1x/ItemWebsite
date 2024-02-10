@@ -11,7 +11,11 @@
         @foreach($categories as $category)
         <option value=" {{ $category->id }} "> {{ $category->category }} </option>
         @endforeach
-      </select> </div>
+      </select> 
+    @error('category_id')
+      <div class = "alert alert-danger"> Select a category </div>
+    @enderror
+  </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Item Name</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name = 'name' value = "{{ old('name') }}">

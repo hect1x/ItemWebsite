@@ -21,12 +21,25 @@
           <a class="nav-link {{ ($title === 'Home')? 'active' : ''}} " aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ ($title === 'My Items')? 'active' : ''}}" href="/myitems">My Items</a>
+          <a class="nav-link {{ ($title === 'Browse Items')? 'active' : ''}}" href="/myitems">Browse Items</a>
         </li>       
         <li class="nav-item">
           <a class="nav-link {{ ($title === 'About Me')? 'active' : ''}}" href="/aboutme">About Me</a>
         </li>
-      </ul>
+    @can('authenticated')
+        <li class="nav-item">
+          <a class="nav-link {{ ($title === 'My Cart')? 'active' : ''}}" href="/mycart">My Cart</a>
+        </li>
+    @endcan
+  @can('is_admin')
+      <li class="nav-item">
+          <a class="nav-link {{ ($title === 'Create Item')? 'active' : ''}}" href="/create-item">Create Item</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ ($title === 'Create Category')? 'active' : ''}}" href="/create-category">Create Category</a>
+        </li>
+  @endcan
+      </ul>  
       @auth
       <ul class="navbar-nav ms-auto me-5">
         <li class="nav-item">

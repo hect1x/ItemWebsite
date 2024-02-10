@@ -18,7 +18,7 @@ class registerController extends Controller
             'name' => 'required|min:3|max:40',
             'email' => 'required|unique:users|email:dns',
             'password' => 'required|min:6|max:12',
-            'number' => 'required|starts_with:08|min:8|max:15'
+            'number' => 'required|numeric|starts_with:08|digits_between:8,15'
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);

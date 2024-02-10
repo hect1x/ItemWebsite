@@ -24,7 +24,9 @@ class Item extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function customers(){
-        return $this->belongsToMany(Customer::class);
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'users_items')
+                    ->withPivot(['item_quantity', 'total_price']);
     }
 }

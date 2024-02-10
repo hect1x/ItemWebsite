@@ -16,10 +16,10 @@ class itemController extends Controller
     }
     public function storeItem(Request $request){
         $request->validate([
-            'category_id' => 'required',
+            'category_id' => 'required|integer',
             'name' => 'required|min:5|max:80|',
-            'price' => 'required',
-            'quantity' => 'required',
+            'price' => 'required|integer',
+            'quantity' => 'required|integer',
             'image' => 'required|mimes:jpg,png'
         ]);
 
@@ -40,7 +40,7 @@ class itemController extends Controller
     public function index(){
         $items = Item::all();
         return view('myitems',[
-            'title' => "My Items",
+            'title' => "Browse Items",
             'items' => $items
         ]);
     }
@@ -48,7 +48,7 @@ class itemController extends Controller
     public function showItem(Item $item){
         return view('showItem', [
             'title' => 'Show Item',
-            'item' => $item
+            'item' => $item,
         ]);   
     }
 
@@ -60,18 +60,21 @@ class itemController extends Controller
     public function edit(Item $item){
         return view('editItem',[
             'title' => 'Editing Item',
-            'item' => $item
+            'item' => $item,
+            'categories' => Category::all()
         ]);
     }
 
     public function update (Item $item, Request $request){
         $request->validate([
+            'category_id' => 'required|integer',
             'name' => 'required|min:5|max:80|',
             'price' => 'required',
             'quantity' => 'required'
         ]);
 
         $item->update([
+            'category_id' => $request->category_id,
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity

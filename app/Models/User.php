@@ -23,7 +23,12 @@ class User extends Authenticatable
         'password',
         'number'
     ];
-
+    
+    public function items()
+    {
+        return $this->belongsToMany(Item::class, 'users_items')
+                    ->withPivot(['item_quantity', 'total_price']);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
