@@ -57,8 +57,9 @@ Route::POST('/store-category', [categoryController::class, 'storeCategory'])->mi
 Route::get('/categories', [categoryController::class, 'index']);
 Route::get('/show-category/{category:id}',[categoryController::class, 'showCategory']);
 
-//Cart Controller
-Route::get('/addToCart/{item:id}', [cartController::class, 'addToCart'])->middleware('auth');
-Route::POST('/update-cart/{item:id}', [cartController::class, 'updateCart'])->name('updateCart')->middleware('auth');
+//Cart Conttoller
+Route::POST('/addCart/{item:id}', [cartController::class, 'addCart'])->middleware('auth');
 Route::get('/mycart', [cartController::class, 'myCart'])->middleware('auth');
-Route::get('/remove-item/{itemId}', [cartController::class, 'removeItem'])->name('removeItem');
+Route::get('/deleteCart/{id}', [cartController::class, 'deleteCart'])->middleware('auth');
+Route::get('/editCart/{id}', [cartController::class, 'editCart'])->middleware('auth');
+Route::POST('/checkout', [cartController::class, 'checkout'])->middleware('auth');
