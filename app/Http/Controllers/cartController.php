@@ -14,6 +14,12 @@ class cartController extends Controller
     public function addCart(Request $request, $id){
         $user = auth()->user();
         $item = Item::find($id);
+        if($item->quantity == 0){
+            return redirect()->back()->with('Fail0', 'Item is out of stock');
+        }
+        if($item->quantity < $request->quantity){
+            return redirect()->back()->with('Fail1', 'Stock not enough ');
+        }
         $cart = new Cart;
 
         $cart->user_id = $user->id;
@@ -56,6 +62,10 @@ class cartController extends Controller
     
         $totalPrice = 0;
         foreach ($cart as $carts) {
+            $item = Item::where('name', $carts->item_name)->first();
+            $item->update([
+                'quantity' => $item->quantity - $carts->total_quantity
+            ]);
             $totalPrice += $carts->total_price;
         }
         
