@@ -55,7 +55,7 @@ class cartController extends Controller
     public function checkout(Request $request){
         $request->validate([
             'address' => 'required|min:10|max:100',
-            'postal' => 'required|numeric|digits_between:5,5'
+            'postal' => 'required|numeric|digits:5'
         ]);
         $user = auth()->user();
         $cart = Cart::where('user_id', $user->id)->get();

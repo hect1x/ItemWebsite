@@ -7,7 +7,7 @@
 <a href="/show-item/{{ $item->id }}"> 
 <h4> Name: {{ $item->name }} </h4> 
 </a>
-<h5> Price: {{ $item->price }} </h5>
+<h5> Price: Rp {{ $item->price }} </h5>
 <h5> Quantity: {{ $item->quantity }} </h5><br>
 
 
