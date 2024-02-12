@@ -14,12 +14,27 @@ class cartController extends Controller
     public function addCart(Request $request, $id){
         $user = auth()->user();
         $item = Item::find($id);
+
+        $beforeCart = Cart::where('user_id', $user->id)->where('item_name', $item->name)->first();
+
+
         if($item->quantity == 0){
             return redirect()->back()->with('Fail0', 'Item is out of stock');
         }
         if($item->quantity < $request->quantity){
-            return redirect()->back()->with('Fail1', 'Stock not enough ');
+            return redirect()->back()->with('Fail1', 'Stock not enough to satisfy request');
         }
+        if($beforeCart){
+            if($beforeCart->total_quantity + $request->quantity > $item->quantity){
+                return redirect()->back()->with('Fail2', 'The requested quantity and those in your current cart exceeds the available stock.');
+            }
+            $newQuantity = $beforeCart->total_quantity + $request->quantity;
+            $beforeCart->total_quantity = $newQuantity;
+            $beforeCart->total_price = $newQuantity * $item->price;
+            $beforeCart->save();
+            return redirect('/');
+        }
+
         $cart = new Cart;
 
         $cart->user_id = $user->id;
