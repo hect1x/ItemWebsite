@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('item_name');
-            $table->integer('total_quantity');
-            $table->integer('total_price');
+            $table->bigInteger('total_quantity');
+            $table->bigInteger('total_price');
             $table->timestamps();
         });
     }

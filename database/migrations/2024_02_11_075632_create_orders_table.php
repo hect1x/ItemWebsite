@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('address');
             $table->string('postal');
-            $table->integer('total');
+            $table->bigInteger('total');
             $table->timestamps();
         });
     }
